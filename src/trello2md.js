@@ -6,9 +6,10 @@ export default class Trello2md {
 
     convert(data) {
         let lines = [];
+        let i = 0
         lines.push(`## 本周工作`)
         for (let key in data) {
-            lines.push(`##### ${data[key].name}（用时：${data[key].hours}h）`)
+            lines.push(`##### ${++i}. ${data[key].name}（用时：${data[key].hours}h）`)
             lines.push(`- 进度：`)
             data[key].comments.map((text) => {
                 lines.push(`- ${text}`)

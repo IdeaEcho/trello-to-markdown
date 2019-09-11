@@ -21,7 +21,7 @@ node example/example.js
   
 - [x] 将单个成员的本周评论数据转为markdown
 - [x] 本周任务标题加总用时
-- [ ] 本周任务标题加计数
+- [x] 本周任务标题加计数
 - [ ] 自动获取memberId
 - [ ] 汇总小组周评论
 
