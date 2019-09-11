@@ -6,8 +6,10 @@ export default class Trello2md {
 
     convert(data) {
         let lines = [];
+        lines.push(`## 本周工作`)
         for (let key in data) {
-            lines.push(`### ${data[key].name}（用时：）`)
+            lines.push(`##### ${data[key].name}（用时：${data[key].hours}h）`)
+            lines.push(`- 进度：`)
             data[key].comments.map((text) => {
                 lines.push(`- ${text}`)
             });
@@ -20,19 +22,28 @@ export default class Trello2md {
     
     //获取评论，根据卡片分组
     getCommentsByCard(actions) {
-        return actions.reduce((pre, current, index) => {
-            if (pre[current.data.card.id]) {
-                pre[current.data.card.id].comments.push(current.data.text)
-                // pre[current.data.card.id].hours += this.getTotalHour(current.data.text)
+        return actions.reduce((pre, current) => {
+            let id = current.data.card.id
+            let comment = current.data.text
+            let hours = this.getTotalHour(comment)
+            if (pre[id]) {
+                pre[id].comments.push(comment)
+                pre[id].hours += hours
             } else {
-                pre[current.data.card.id] = {
+                pre[id] = {
                     name: current.data.card.name,
-                    hours: 0,
-                    comments: []
+                    comments: [comment],
+                    hours
                 }
             }
             return pre
         }, {})
+    }
+
+    getTotalHour(str) {
+        const matchHour = new RegExp("(?<=@).*?(?=(h|@))", 'gi') //匹配@开头，h或@结尾的字符串
+        const hourArr = str.match(matchHour)
+        return hourArr.reduce((acc, cur) => acc + parseFloat(cur), 0);
     }
 
     //获取某个成员的所有评论
@@ -46,7 +57,7 @@ export default class Trello2md {
             since,
             fields
         })
-        let comments = this.getCommentsByCard(actions);
+        let comments = this.getCommentsByCard(actions, since);
         this.convert(comments);
     }
 }
