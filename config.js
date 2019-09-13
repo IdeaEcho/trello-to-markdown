@@ -7,4 +7,4 @@ module.exports.token = '9247ca313d281d351ee9f9cf250ab93a97344fd33230577b0c39d8c6
 //Put all of the desired boards' IDs into this array
 module.exports.boards = ['52b8198436f69c175e010e8c', 'boardID2'];
 
-module.exports.memberId = '578c8e3c06e1320651b7c847'
+module.exports.teamUsername = ['user93689027','zhangheng17','wangjunjie8','fupengcheng','user83377986','chenshuyao']

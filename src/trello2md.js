@@ -12,6 +12,7 @@ export default class Trello2md {
             lines.push(`##### ${++i}. ${data[key].name}（用时：${data[key].hours}h）`)
             lines.push(`- 进度：`)
             data[key].comments.map((text) => {
+                text = text.replace(/\n/g," ")
                 lines.push(`- ${text}`)
             });
             lines.push('')
@@ -20,9 +21,24 @@ export default class Trello2md {
             console.log(line)
         })
     }
-    
-    //获取评论，根据卡片分组
-    getCommentsByCard(actions) {
+
+    //获取memberId成员从since时间点起的所有活动
+    async getMemberActions(memberId, since) {
+        let filter = 'commentCard',
+            limit = 1000,
+            fields = 'data,date'
+        let actions = await this.trello.makeRequest('get', `/1/members/${memberId}/actions`, {
+            filter,
+            limit,
+            since,
+            fields
+        })
+        let cardActions = this.getActionsByCard(actions, since)
+        this.convert(cardActions)
+    }
+
+    //获取按卡片分组的活动
+    getActionsByCard(actions) {
         return actions.reduce((pre, current) => {
             let id = current.data.card.id
             let comment = current.data.text
@@ -41,24 +57,24 @@ export default class Trello2md {
         }, {})
     }
 
+    //根据字符串计算总用时（例如：对接@.5h 修改bug@1.5h）
     getTotalHour(str) {
         const matchHour = new RegExp("(?<=@).*?(?=(h|@))", 'gi') //匹配@开头，h或@结尾的字符串
         const hourArr = str.match(matchHour)
-        return hourArr.reduce((acc, cur) => acc + parseFloat(cur), 0);
+        return hourArr.reduce((acc, cur) => acc + parseFloat(cur), 0)
     }
 
-    //获取某个成员的所有评论
-    async getMemberActions(memberId, since) {
-        let filter = 'commentCard',
-            limit = 1000,
-            fields = 'data,date'
-        let actions = await this.trello.makeRequest('get', `/1/members/${memberId}/actions`, {
-            filter,
-            limit,
-            since,
-            fields
-        })
-        let comments = this.getCommentsByCard(actions, since);
-        this.convert(comments);
+    //根据boardId，获取看板的所有成员的memberId
+    async getBoardMembers(boardId) {
+        let members = await this.trello.makeRequest('get', `/1/boards/${boardId}/members`)
+        return members
+    }
+
+    getSingleMember(members,username) {
+        return members.filter(member => member.username==username)
+    }
+
+    getTeamMembers(members,usernameArr) {
+        return members.filter(member => usernameArr.some(item=>member.username==item))
     }
 }

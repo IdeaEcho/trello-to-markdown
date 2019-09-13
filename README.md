@@ -11,9 +11,9 @@ This script converts JSON exports from [Trello](http://trello.com) to [Markdown]
 ```
 npm install
 ```
-点击(https://trello.com/app-key)，获取 `key` 和 `token`。
+点击 https://trello.com/app-key  ，获取 `key` 和 `token`。
 
-在config.js配置 `key` 、`token` 、`看板id` 、`成员id`
+在config.js配置 `key` 、`token` 、`看板id` 、`成员username`
 
 node example/example.js
 
@@ -22,7 +22,7 @@ node example/example.js
 - [x] 将单个成员的本周评论数据转为markdown
 - [x] 本周任务标题加总用时
 - [x] 本周任务标题加计数
-- [ ] 自动获取memberId
+- [x] 根据username获取memberId
 - [ ] 汇总小组周评论
 
 # License
