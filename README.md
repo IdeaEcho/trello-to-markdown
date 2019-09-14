@@ -13,7 +13,7 @@ npm install
 ```
 点击 https://trello.com/app-key  ，获取 `key` 和 `token`。
 
-在config.js配置 `key` 、`token` 、`看板id` 、`成员username`
+在config.js配置 `key` 、`token` 、`看板名称` 、`成员username`
 
 node example/example.js
 
@@ -23,6 +23,7 @@ node example/example.js
 - [x] 本周任务标题加总用时
 - [x] 本周任务标题加计数
 - [x] 根据username获取memberId
+- [x] 根据看板名称获取看板ID
 - [ ] 汇总小组周评论
 
 # License

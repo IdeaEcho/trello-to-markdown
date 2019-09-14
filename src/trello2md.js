@@ -1,6 +1,8 @@
 import Trello from 'trello';
 export default class Trello2md {
     constructor(key, token) {
+        this.key = key
+        this.token = token
         this.trello = new Trello(key, token);
     }
 
@@ -12,7 +14,7 @@ export default class Trello2md {
             lines.push(`##### ${++i}. ${data[key].name}（用时：${data[key].hours}h）`)
             lines.push(`- 进度：`)
             data[key].comments.map((text) => {
-                text = text.replace(/\n/g," ")
+                text = text.replace(/\n/g, " ")
                 lines.push(`- ${text}`)
             });
             lines.push('')
@@ -22,7 +24,22 @@ export default class Trello2md {
         })
     }
 
-    //获取memberId成员从since时间点起的所有活动
+    //根据看板名称，获取看板ID
+    async getBoardId(name) {
+        let member = await this.trello.makeRequest('get', `/1/tokens/${this.token}/member`)
+        let fields = 'name,id'
+        let boards = await this.trello.makeRequest('get', `/1/members/${member.id}/boards`,{fields})
+        let board = boards.find(board => board.name == name)
+        return board.id
+    }
+
+    //根据看板ID，获取看板的所有成员数据
+    async getBoardMembers(boardId) {
+        let members = await this.trello.makeRequest('get', `/1/boards/${boardId}/members`)
+        return members
+    }
+
+    //获取成员从since时间点起的所有活动
     async getMemberActions(memberId, since) {
         let filter = 'commentCard',
             limit = 1000,
@@ -64,17 +81,9 @@ export default class Trello2md {
         return hourArr.reduce((acc, cur) => acc + parseFloat(cur), 0)
     }
 
-    //根据boardId，获取看板的所有成员的memberId
-    async getBoardMembers(boardId) {
-        let members = await this.trello.makeRequest('get', `/1/boards/${boardId}/members`)
-        return members
+    //获取小组成员数据
+    filterBoardMembers(members, usernameArr) {
+        return members.filter(member => usernameArr.some(username => member.username == username))
     }
 
-    getSingleMember(members,username) {
-        return members.filter(member => member.username==username)
-    }
-
-    getTeamMembers(members,usernameArr) {
-        return members.filter(member => usernameArr.some(item=>member.username==item))
-    }
 }
