@@ -1,4 +1,5 @@
 import Trello from 'trello';
+import { log } from 'util';
 export default class Trello2md {
     constructor(key, token) {
         this.key = key
@@ -9,7 +10,6 @@ export default class Trello2md {
     convert(data) {
         let lines = [];
         let i = 0
-        lines.push(`## 本周工作`)
         for (let key in data) {
             lines.push(`##### ${++i}. ${data[key].name}（用时：${data[key].hours}h）`)
             lines.push(`- 进度：`)

@@ -22,7 +22,12 @@ const main = async function(){
     const boardMembers = await t.getBoardMembers(boardId)//看板所有成员数据
     const teamMembers = t.filterBoardMembers(boardMembers, config.teamUsername)//小组成员数据
     const since = getFirstDayOfWeek(new Date())//起始日期
-    t.getMemberActions(teamMembers[1].id, since)//获取成员起始日期起的活动
+    console.log(`## 本周工作`)
+    await teamMembers.reduce(async (prevPromise, member) => {
+        await prevPromise;
+        console.log(`### ${member.fullName}`)
+        return t.getMemberActions(member.id, since)//获取成员起始日期起的活动
+    }, Promise.resolve())
 }
 
 main()
