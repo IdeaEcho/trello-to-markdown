@@ -24,7 +24,7 @@ node example/example.js
 - [x] 本周任务标题加计数
 - [x] 根据username获取memberId
 - [x] 根据看板名称获取看板ID
-- [ ] 汇总小组周评论
+- [x] 汇总小组周评论
 
 # License
 
