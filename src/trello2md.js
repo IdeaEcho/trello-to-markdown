@@ -77,7 +77,7 @@ export default class Trello2md {
     //根据字符串计算总用时（例如：对接@.5h 修改bug@1.5h）
     getTotalHour(str) {
         const matchHour = new RegExp("(?<=@).*?(?=(h|@))", 'gi') //匹配@开头，h或@结尾的字符串
-        const hourArr = str.match(matchHour)
+        const hourArr = str.match(matchHour) || []
         return hourArr.reduce((acc, cur) => acc + parseFloat(cur), 0)
     }
 
