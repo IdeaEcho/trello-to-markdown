@@ -1,10 +1,10 @@
 //Replace 'your_key' with your key
-module.exports.key = '64615fd2cdff37463e0f8981f94acb0e';
+module.exports.key = '';
 
 //Replace 'your_token' with your application's token
-module.exports.token = '9247ca313d281d351ee9f9cf250ab93a97344fd33230577b0c39d8c6f679d051';
+module.exports.token = '';
 
 //Put all of the desired boards' name into this array
-module.exports.boards = ['前端教', 'boardName2'];
+module.exports.boards = ['看板名称'];
 
-module.exports.teamUsername = ['user93689027','zhangheng17','wangjunjie8','fupengcheng','user83377986','chenshuyao']
+module.exports.teamUsername = ['成员 Username']
