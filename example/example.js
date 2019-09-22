@@ -26,7 +26,7 @@ const main = async function(){
     await teamMembers.reduce(async (prevPromise, member) => {
         await prevPromise;
         console.log(`### ${member.fullName}`)
-        return t.getMemberActions(member.id, since) //获取成员since日期开始的活动
+        return t.getMemberActions(boardId, member.id, since) //获取成员since日期开始的活动
     }, Promise.resolve())
 }
 

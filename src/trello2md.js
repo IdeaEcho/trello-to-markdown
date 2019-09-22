@@ -1,5 +1,4 @@
 import Trello from 'trello';
-import { log } from 'util';
 export default class Trello2md {
     constructor(key, token) {
         this.key = key
@@ -40,7 +39,7 @@ export default class Trello2md {
     }
 
     //获取成员从since时间点起的所有活动
-    async getMemberActions(memberId, since) {
+    async getMemberActions(boardId, memberId, since) {
         let filter = 'commentCard',
             limit = 1000,
             fields = 'data,date'
@@ -50,13 +49,15 @@ export default class Trello2md {
             since,
             fields
         })
-        let cardActions = this.getActionsByCard(actions, since)
+        let cardActions = this.getActionsByCard(boardId, actions)
         this.convert(cardActions)
     }
 
     //获取按卡片分组的活动
-    getActionsByCard(actions) {
+    getActionsByCard(boardId, actions) {
         return actions.reduce((pre, current) => {
+            let currentBoardId = current.data.board.id
+            if(currentBoardId!=boardId) return pre
             let id = current.data.card.id
             let comment = current.data.text
             let hours = this.getTotalHour(comment)
