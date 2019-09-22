@@ -1,10 +1,11 @@
 //Replace 'your_key' with your key
-module.exports.key = '';
+module.exports.key = 'your_key';
 
 //Replace 'your_token' with your application's token
-module.exports.token = '';
+module.exports.token = 'your_token';
 
-//Put all of the desired boards' name into this array
-module.exports.boards = ['看板名称'];
+//Replace 'your_board_name' with the desired boards' name
+module.exports.board = 'your_board_name';
 
-module.exports.teamUsername = ['成员 Username']
+//Put all of the desired members' username into this array
+module.exports.teamUsername = ['']

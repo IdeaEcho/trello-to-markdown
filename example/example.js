@@ -17,23 +17,22 @@ const t = new Trello2md(
     config.token
 )
 
-const main = async function(){
-    const boardId = await t.getBoardId(config.boards[0])//看板id
-    const boardMembers = await t.getBoardMembers(boardId)//看板所有成员数据
-    const teamMembers = t.filterBoardMembers(boardMembers, config.teamUsername)//小组成员数据
-    const since = getFirstDayOfWeek(new Date())//起始日期
+const main = async function () {
+    const boardId = await t.getBoardId(config.board) //看板id
+    const boardMembers = await t.getBoardMembers(boardId) //看板所有成员数据
+    const teamMembers = t.filterBoardMembers(boardMembers, config.teamUsername) //小组成员数据
+    const since = getFirstDayOfWeek(new Date()) //起始日期
     console.log(`## 本周工作`)
     await teamMembers.reduce(async (prevPromise, member) => {
         await prevPromise;
         console.log(`### ${member.fullName}`)
         return t.getMemberActions(boardId, member.id, since) //获取成员since日期开始的活动
     }, Promise.resolve())
-    
+
     console.log(`## 下周工作`)
-    teamMembers.map(member=>{
+    teamMembers.map(member => {
         console.log(`##### ${member.fullName}`)
     })
 }
 
 main()
-
