@@ -28,6 +28,11 @@ const main = async function(){
         console.log(`### ${member.fullName}`)
         return t.getMemberActions(boardId, member.id, since) //获取成员since日期开始的活动
     }, Promise.resolve())
+    
+    console.log(`## 下周工作`)
+    teamMembers.map(member=>{
+        console.log(`##### ${member.fullName}`)
+    })
 }
 
 main()
