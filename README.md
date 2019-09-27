@@ -1,7 +1,7 @@
 # trello-to-markdown
 This script converts JSON exports from [Trello](http://trello.com) to [Markdown](http://daringfireball.net/projects/markdown/basics).
 
-团队中工作内容记录在trello每个任务卡片的活动里，而周报用的腾讯文档，需要把trello的每条记录copy到文档里，比较费时，也容易遗漏出错。所以写了这个小工具，避免重复的工作。
+团队中工作内容记录在trello每个任务卡片的活动里，而周报用的腾讯文档，需要把trello的每条记录copy到文档里，比较费时，也容易遗漏出错。所以写了这个小工具，避免重复的工作。把节省下来的时间，用在总结和反思。
 
 > 备注：由于用了正则表达式的后行断言，node.js版本至少要8.10.0。
 
