@@ -28,7 +28,7 @@ module.exports.boards = ['boardName1', 'boardName2'];
 module.exports.teamUsername = ['username1','username2']
 ```
 
-4.node example/example.js
+4.npm run example
 
 
 # Todolist
